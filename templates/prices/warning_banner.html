@@ -1,0 +1,6 @@
+{% load fa_format %}{% if stale %}
+<div class="price-warning" role="alert">
+  خواندن قیمت از والکس متوقف شده است (بیش از ۵ دقیقه بدون خواندن موفق).
+  آخرین خواندن موفق: {% if last_ok %}{{ last_ok.fetched_at|jalali }}{% else %}هرگز{% endif %}
+</div>
+{% endif %}

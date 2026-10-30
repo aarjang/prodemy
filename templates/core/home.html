@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static fa_format %}
+
+{% block title %}قیمت لحظه‌ای تتر{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <h1 class="h3 mb-3">قیمت تتر در والکس</h1>
+    <section class="card bg-body-secondary border-0 shadow-sm" aria-labelledby="price-heading" data-price-card>
+      <div class="card-body p-4">
+        <h2 id="price-heading" class="h6 text-body-secondary mb-3">آخرین قیمت معامله‌شده تتر/تومان</h2>
+        {% if reading %}
+          <p class="mb-2 d-flex align-items-baseline flex-wrap gap-2">
+            <span class="price-value" data-price>{{ reading.price|toman }}</span>
+            <span class="fs-5">تومان</span>
+            <span data-stale-badge class="badge text-bg-warning"{% if not stale %} hidden{% endif %}>قدیمی</span>
+          </p>
+          <dl class="row small mb-0">
+            <dt class="col-5 col-sm-4 fw-normal text-body-secondary">زمان خواندن</dt>
+            <dd class="col-7 col-sm-8 mb-1" data-fetched-at>{{ reading.fetched_at|jalali }}</dd>
+            <dt class="col-5 col-sm-4 fw-normal text-body-secondary">زمان آخرین معامله</dt>
+            <dd class="col-7 col-sm-8 mb-1" data-traded-at>{{ reading.traded_at|jalali }}</dd>
+          </dl>
+          <p class="small text-warning-emphasis mt-3 mb-0" data-no-recent-trades{% if not no_recent_trades %} hidden{% endif %}>معامله اخیری ثبت نشده؛ این قیمت مربوط به آخرین معامله است.</p>
+          <p class="small text-body-secondary mt-3 mb-0" data-stale-note{% if not stale %} hidden{% endif %}>قیمت بیش از ۵ دقیقه است به‌روز نشده است.</p>
+        {% else %}
+          <p class="mb-0 text-body-secondary">قیمت هنوز در دسترس نیست. چند لحظه بعد دوباره سر بزنید.</p>
+        {% endif %}
+      </div>
+    </section>
+    {% if user.is_authenticated %}
+      <p class="mt-3"><a class="btn btn-outline-primary" href="{% url 'alerts:list' %}">مدیریت هشدارهای من</a></p>
+    {% else %}
+      <p class="mt-3 small text-body-secondary">برای دریافت سیگنال خرید و فروش روی قیمت دلخواه، <a href="{% url 'accounts:signup' %}">ثبت‌نام کنید</a>.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if reading %}<script src="{% static 'js/price-live.js' %}" defer></script>{% endif %}
+{% endblock %}

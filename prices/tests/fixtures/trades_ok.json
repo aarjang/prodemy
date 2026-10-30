@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "message": "عملیات موفقیت‌آمیز بود.",
+  "result": {
+    "latestTrades": [
+      {"symbol": "USDTTMN", "quantity": "1.0000000000000000", "price": "271188.0000000000000000", "sum": "271188.0000000000000000", "isBuyOrder": false, "timestamp": "2026-10-29T20:01:20Z"},
+      {"symbol": "USDTTMN", "quantity": "9.6600000000000000", "price": "271165.5000000000000000", "sum": "2619458.7300000000000000", "isBuyOrder": true, "timestamp": "2026-10-29T20:02:29Z"},
+      {"symbol": "USDTTMN", "quantity": "24.5800000000000000", "price": "271100.0000000000000000", "sum": "6663638.0000000000000000", "isBuyOrder": true, "timestamp": "2026-10-29T19:58:00Z"}
+    ]
+  }
+}

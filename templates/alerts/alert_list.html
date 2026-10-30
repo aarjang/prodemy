@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load fa_format %}
+
+{% block title %}هشدارهای من{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+  <h1 class="h3 mb-0">هشدارهای من</h1>
+  <div class="d-flex align-items-center gap-3">
+    <span class="small text-body-secondary">هشدار فعال: {{ active_count|fa_digits }} / {{ max_active|fa_digits }}</span>
+    <a class="btn btn-primary btn-sm" href="{% url 'alerts:create' %}">هشدار جدید</a>
+  </div>
+</div>
+
+{% include "includes/disclaimer.html" %}
+
+{% if alerts %}
+  <div class="table-responsive">
+    <table class="table align-middle stack-sm">
+      <thead>
+        <tr>
+          <th scope="col">شرط</th>
+          <th scope="col">سیگنال</th>
+          <th scope="col">وضعیت</th>
+          <th scope="col">آخرین فعال شدن</th>
+          <th scope="col">یادداشت</th>
+          <th scope="col"><span class="visually-hidden">عملیات</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for alert in alerts %}
+          <tr>
+            <td data-label="شرط">{{ alert.get_direction_display }} <strong>{{ alert.threshold|toman }}</strong> تومان</td>
+            <td data-label="سیگنال">
+              <span class="badge {% if alert.signal == 'buy' %}text-bg-success{% else %}text-bg-danger{% endif %}">{{ alert.get_signal_display }}</span>
+            </td>
+            <td data-label="وضعیت">
+              <span class="badge {% if alert.state == 'armed' %}text-bg-primary{% elif alert.state == 'triggered' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">{{ alert.get_state_display }}</span>
+            </td>
+            <td data-label="آخرین فعال شدن">{% if alert.last_triggered_at %}{{ alert.last_triggered_at|jalali }}{% else %}—{% endif %}</td>
+            <td data-label="یادداشت">{{ alert.note|default:"—" }}</td>
+            <td data-label="عملیات">
+              <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'alerts:edit' alert.pk %}">ویرایش</a>
+                {% if alert.state == 'paused' %}
+                  <form method="post" action="{% url 'alerts:resume' alert.pk %}">{% csrf_token %}<button type="submit" class="btn btn-outline-primary btn-sm">ادامه</button></form>
+                {% else %}
+                  <form method="post" action="{% url 'alerts:pause' alert.pk %}">{% csrf_token %}<button type="submit" class="btn btn-outline-secondary btn-sm">توقف</button></form>
+                {% endif %}
+                <a class="btn btn-outline-danger btn-sm" href="{% url 'alerts:delete' alert.pk %}">حذف</a>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="card bg-body-secondary border-0"><div class="card-body text-center py-5">
+    <p class="mb-3">هنوز هشداری نساخته‌اید.</p>
+    <a class="btn btn-primary" href="{% url 'alerts:create' %}">ساخت اولین هشدار</a>
+  </div></div>
+{% endif %}
+{% endblock %}

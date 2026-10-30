@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{% if form.instance.pk %}ویرایش هشدار{% else %}هشدار جدید{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+    <section class="card bg-body-secondary border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">{% if form.instance.pk %}ویرایش هشدار{% else %}هشدار جدید{% endif %}</h1>
+        {% include "includes/disclaimer.html" %}
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.threshold.id_for_label }}">{{ form.threshold.label }}</label>
+            <input type="text" inputmode="numeric" name="{{ form.threshold.html_name }}" id="{{ form.threshold.id_for_label }}"
+                   class="form-control{% if form.threshold.errors %} is-invalid{% endif %}"
+                   value="{{ form.threshold.value|default:'' }}" required>
+            <div class="form-text">{{ form.threshold.help_text }}</div>
+            {% for error in form.threshold.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+          </div>
+
+          {% for field in form %}{% if field.name == 'direction' or field.name == 'signal' %}
+            <fieldset class="mb-3">
+              <legend class="form-label fs-6">{{ field.label }}</legend>
+              {% for choice in field %}
+                <div class="form-check form-check-inline">
+                  {{ choice.tag }}
+                  <label class="form-check-label" for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
+                </div>
+              {% endfor %}
+              {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+              {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </fieldset>
+          {% endif %}{% endfor %}
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.note.id_for_label }}">{{ form.note.label }}</label>
+            <input type="text" name="{{ form.note.html_name }}" id="{{ form.note.id_for_label }}" maxlength="200"
+                   class="form-control{% if form.note.errors %} is-invalid{% endif %}" value="{{ form.note.value|default:'' }}">
+            {% for error in form.note.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">ذخیره</button>
+            <a class="btn btn-outline-secondary" href="{% url 'alerts:list' %}">انصراف</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

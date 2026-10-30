@@ -1,0 +1,65 @@
+/* Dark, blue-accented Django admin matching the site palette (FR-028, FR-029). */
+
+:root {
+  color-scheme: dark;
+  --primary: #2563eb;
+  --secondary: #121417;
+  --accent: #60a5fa;
+  --primary-fg: #ffffff;
+  --body-fg: #e5e7eb;
+  --body-bg: #0a0a0a;
+  --body-quiet-color: #9ca3af;
+  --body-medium-color: #d1d5db;
+  --body-loud-color: #ffffff;
+  --header-color: #e5e7eb;
+  --header-branding-color: #60a5fa;
+  --header-bg: #121417;
+  --header-link-color: #e5e7eb;
+  --breadcrumbs-fg: #9ca3af;
+  --breadcrumbs-link-fg: #e5e7eb;
+  --breadcrumbs-bg: #1a1d21;
+  --link-fg: #60a5fa;
+  --link-hover-color: #93c5fd;
+  --link-selected-fg: #93c5fd;
+  --hairline-color: #2a2f36;
+  --border-color: #2a2f36;
+  --darkened-bg: #121417;
+  --selected-bg: #1a1d21;
+  --selected-row: #0b1a33;
+  --button-fg: #ffffff;
+  --button-bg: #2563eb;
+  --button-hover-bg: #1d4ed8;
+  --default-button-bg: #1d4ed8;
+  --default-button-hover-bg: #1e40af;
+  --close-button-bg: #374151;
+  --close-button-hover-bg: #4b5563;
+  --delete-button-bg: #b91c1c;
+  --delete-button-hover-bg: #991b1b;
+  --object-tools-fg: #ffffff;
+  --object-tools-bg: #374151;
+  --object-tools-hover-bg: #4b5563;
+  --message-success-bg: #14532d;
+  --message-warning-bg: #713f12;
+  --message-error-bg: #7f1d1d;
+}
+
+/* The single dark theme is forced; hide the light/dark toggle (FR-028). */
+#header button.theme-toggle {
+  display: none;
+}
+
+.price-warning {
+  background: #7f1d1d;
+  color: #ffffff;
+  padding: 10px 40px;
+  font-size: 0.875rem;
+}
+
+.price-status-summary {
+  background: var(--darkened-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--body-fg);
+  margin: 0 0 12px;
+  padding: 10px 12px;
+}

@@ -1,0 +1,64 @@
+{% load static fa_format %}<!doctype html>
+<html lang="fa" dir="rtl" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}قیمت تتر{% endblock %} | هشدار قیمت تتر</title>
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap-5.3.3/css/bootstrap.rtl.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <header class="site-header">
+    <nav class="navbar navbar-expand site-nav py-2" aria-label="ناوبری اصلی">
+      <div class="container flex-wrap row-gap-2">
+        <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">هشدار قیمت تتر</a>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link{% if request.resolver_match.view_name == 'core:home' %} active{% endif %}" href="{% url 'core:home' %}"{% if request.resolver_match.view_name == 'core:home' %} aria-current="page"{% endif %}>قیمت لحظه‌ای</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link{% if request.resolver_match.view_name == 'alerts:list' %} active{% endif %}" href="{% url 'alerts:list' %}"{% if request.resolver_match.view_name == 'alerts:list' %} aria-current="page"{% endif %}>هشدارها</a></li>
+            <li class="nav-item">
+              <a class="nav-link{% if request.resolver_match.view_name == 'alerts:notifications' %} active{% endif %}" href="{% url 'alerts:notifications' %}"{% if request.resolver_match.view_name == 'alerts:notifications' %} aria-current="page"{% endif %}>
+                اعلان‌ها
+                <span class="badge rounded-pill text-bg-primary" data-unread-badge{% if not unread_notifications %} hidden{% endif %}>{{ unread_notifications|default:0|fa_digits }}</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+        <ul class="navbar-nav align-items-center column-gap-3">
+          {% if user.is_authenticated %}
+            <li class="nav-item small text-body-secondary">{{ user.email }}</li>
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary btn-sm">خروج</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link{% if request.resolver_match.view_name == 'login' %} active{% endif %}" href="{% url 'login' %}">ورود</a></li>
+            <li class="nav-item"><a class="btn btn-primary btn-sm" href="{% url 'accounts:signup' %}">ثبت‌نام</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container py-4 flex-grow-1" id="main">
+    {% if messages %}
+      <div class="mb-3">
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer py-3 mt-auto">
+    <div class="container small">قیمت‌ها از بازار تتر/تومان صرافی والکس خوانده می‌شوند.</div>
+  </footer>
+
+  <script src="{% static 'vendor/bootstrap-5.3.3/js/bootstrap.bundle.min.js' %}"></script>
+  {% if user.is_authenticated %}<script src="{% static 'js/notifications.js' %}" defer></script>{% endif %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

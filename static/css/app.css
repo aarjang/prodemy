@@ -1,0 +1,128 @@
+/* Site palette: black backgrounds, blue accent (research.md R7). Loaded after Bootstrap. */
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/vazirmatn/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/vazirmatn/Vazirmatn-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/vazirmatn/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-font-family: Vazirmatn, system-ui, sans-serif;
+  --bs-body-bg: #0a0a0a;
+  --bs-body-bg-rgb: 10, 10, 10;
+  --bs-body-color: #e5e7eb;
+  --bs-body-color-rgb: 229, 231, 235;
+  --bs-emphasis-color: #ffffff;
+  --bs-secondary-color: #9ca3af;
+  --bs-tertiary-bg: #121417;
+  --bs-tertiary-bg-rgb: 18, 20, 23;
+  --bs-secondary-bg: #1a1d21;
+  --bs-secondary-bg-rgb: 26, 29, 33;
+  --bs-primary: #3b82f6;
+  --bs-primary-rgb: 59, 130, 246;
+  --bs-primary-text-emphasis: #93c5fd;
+  --bs-primary-bg-subtle: #0b1a33;
+  --bs-primary-border-subtle: #1e3a8a;
+  --bs-link-color: #60a5fa;
+  --bs-link-color-rgb: 96, 165, 250;
+  --bs-link-hover-color: #93c5fd;
+  --bs-link-hover-color-rgb: 147, 197, 253;
+  --bs-border-color: #2a2f36;
+  --bs-focus-ring-color: rgba(59, 130, 246, 0.5);
+}
+
+[data-bs-theme="dark"] .btn-primary {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #2563eb;
+  --bs-btn-border-color: #2563eb;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #1d4ed8;
+  --bs-btn-hover-border-color: #1d4ed8;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #1e40af;
+  --bs-btn-active-border-color: #1e40af;
+  --bs-btn-disabled-bg: #2563eb;
+  --bs-btn-disabled-border-color: #2563eb;
+}
+
+[data-bs-theme="dark"] .btn-outline-primary {
+  --bs-btn-color: #60a5fa;
+  --bs-btn-border-color: #3b82f6;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #2563eb;
+  --bs-btn-hover-border-color: #2563eb;
+}
+
+/* Navbar without JavaScript: links stay visible and wrap on small screens. */
+.site-nav .navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
+.site-nav .nav-link.active {
+  color: var(--bs-primary);
+  font-weight: 500;
+}
+
+.site-header {
+  background-color: var(--bs-tertiary-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.site-footer {
+  border-top: 1px solid var(--bs-border-color);
+  color: var(--bs-secondary-color);
+}
+
+.price-value {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  color: var(--bs-emphasis-color);
+}
+
+/* Tables that stack into cards below 576 px (alert list). */
+@media (max-width: 575.98px) {
+  .stack-sm thead {
+    display: none;
+  }
+
+  .stack-sm tbody tr {
+    display: block;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--bs-secondary-bg);
+  }
+
+  .stack-sm tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    border: 0;
+    padding: 0.35rem 0;
+  }
+
+  .stack-sm tbody td::before {
+    content: attr(data-label);
+    color: var(--bs-secondary-color);
+    font-size: 0.85em;
+  }
+}

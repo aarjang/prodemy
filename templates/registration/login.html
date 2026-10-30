@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+    <section class="card bg-body-secondary border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-4">ورود</h1>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% include "includes/form_fields.html" %}
+          <input type="hidden" name="next" value="{{ next }}">
+          <button type="submit" class="btn btn-primary w-100">ورود</button>
+        </form>
+        <p class="small mt-3 mb-1">حساب ندارید؟ <a href="{% url 'accounts:signup' %}">ثبت‌نام کنید</a></p>
+        <p class="small mb-0"><a href="{% url 'password_reset' %}">رمز عبور را فراموش کرده‌اید؟</a></p>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

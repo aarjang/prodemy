@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+{% load static price_status %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | پنل مدیریت هشدار قیمت تتر{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">پنل مدیریت هشدار قیمت تتر</a></div>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/admin.css' %}">{% endblock %}
+
+{% block header %}{{ block.super }}{% price_reading_warning %}{% endblock %}

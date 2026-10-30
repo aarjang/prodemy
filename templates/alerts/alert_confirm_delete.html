@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load fa_format %}
+
+{% block title %}حذف هشدار{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+    <section class="card bg-body-secondary border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">حذف هشدار</h1>
+        <p>آیا از حذف این هشدار مطمئن هستید؟</p>
+        <p class="mb-4"><strong>{{ object.get_signal_display }}</strong> وقتی قیمت {{ object.get_direction_display }} <strong>{{ object.threshold|toman }}</strong> تومان باشد</p>
+        <p class="small text-body-secondary">اعلان‌های قبلی این هشدار در تاریخچه می‌مانند.</p>
+        <form method="post">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">حذف</button>
+            <a class="btn btn-outline-secondary" href="{% url 'alerts:list' %}">انصراف</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

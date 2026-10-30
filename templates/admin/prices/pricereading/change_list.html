@@ -1,0 +1,10 @@
+{% extends "admin/change_list.html" %}
+{% load fa_format %}
+
+{% block result_list %}
+<p class="price-status-summary">
+  آخرین خواندن موفق: {% if last_ok %}{{ last_ok.fetched_at|jalali }} ({{ last_ok.price|toman }} تومان){% else %}هرگز{% endif %}
+  — خطاهای ۲۴ ساعت گذشته: {{ failures_24h|fa_digits }}
+</p>
+{{ block.super }}
+{% endblock %}
