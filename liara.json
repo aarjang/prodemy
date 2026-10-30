@@ -4,5 +4,8 @@
   "build": {
     "location": "iran"
   },
-  "disks": []
+  "disks": [],
+  "cron": [
+    "* * * * * cd $ROOT && python3 manage.py poll_prices --once >> /dev/null 2>&1"
+  ]
 }
