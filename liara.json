@@ -1,0 +1,8 @@
+{
+  "app": "prodemy-session5",
+  "port": 80,
+  "build": {
+    "location": "iran"
+  },
+  "disks": []
+}
