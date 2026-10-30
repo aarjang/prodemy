@@ -6,6 +6,7 @@ loaded from a `.env` file in the project root (see `.env.example`).
 """
 
 import os
+import sys
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
@@ -44,9 +45,12 @@ DEBUG = env_bool("DJANGO_DEBUG", False)
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 if not SECRET_KEY:
-    if not DEBUG:
+    # collectstatic runs at image-build time on hosts (e.g. Liara) that inject app
+    # environment variables only at runtime; it never uses the key.
+    _collectstatic_build = len(sys.argv) > 1 and sys.argv[1] == "collectstatic"
+    if not DEBUG and not _collectstatic_build:
         raise ImproperlyConfigured("DJANGO_SECRET_KEY must be set when DJANGO_DEBUG is False.")
-    # Development only: a throwaway key per process, so nothing secret is ever committed.
+    # A throwaway key per process, so nothing secret is ever committed.
     SECRET_KEY = get_random_secret_key()
 
 ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "").split(",") if h.strip()]
