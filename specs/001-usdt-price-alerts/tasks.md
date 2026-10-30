@@ -292,3 +292,9 @@ T054–T056 once US1 and US3 are in).
 - Commit after each task or logical group.
 - The reviewer-owned checklist `checklists/alerts.md` is still unchecked; `/speckit-implement`
   reads it as a gate.
+
+---
+
+## Phase 8: Convergence
+
+- [ ] T062 Add the informational-only disclaimer (`{% include "includes/disclaimer.html" %}`) to the alert delete-confirmation page `templates/alerts/alert_confirm_delete.html`, and extend the FR-019 assertions in `alerts/tests/test_views.py` to cover this page, per FR-019 (partial)
